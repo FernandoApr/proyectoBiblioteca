@@ -1,0 +1,33 @@
+.card-login {
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-login .card-header {
+  background-color: #212529;
+  color: #fff;
+  text-align: center;
+  font-weight: bold;
+  border-bottom: none;
+  padding: 20px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.card-login .card-body {
+  padding: 30px;
+}
+
+.card-login .form-group label {
+  font-weight: bold;
+}
+
+.card-login .btn-primary {
+  background-color: #55c7ee;
+  border-color: #55c7ee;
+}
+
+.card-login .btn-primary:hover {
+  background-color: #288eb1;
+  border-color: #288eb1;
+}
