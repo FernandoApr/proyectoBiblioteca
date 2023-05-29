@@ -18,7 +18,7 @@ const Admin = () => {
   return (
     <div>
         {
-            user && (<h3>{user.email}</h3>)
+            user && (<h3>Hola, <span className='text-primary'>{user.email}</span></h3>)
         }
         {
             user && (
