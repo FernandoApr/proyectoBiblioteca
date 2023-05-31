@@ -2,12 +2,13 @@ import React from 'react'
 import { db } from '../firebase'
 
 const Registro = (props) => {
-    const [lista,setLista]=React.useState([])
+  const [lista,setLista]=React.useState([])
   const [nombre,setNombre]=React.useState('')
   const [apellido,setApellido]=React.useState('')
   const [id,setId]=React.useState('')
   const [modoEdicion,setModoEdicion]=React.useState(false)
   const [error,setError]=React.useState(null)
+  
   React.useEffect(()=>{
     const obtenerDatos=async()=>{
       try {

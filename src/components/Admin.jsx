@@ -2,6 +2,7 @@ import React from 'react'
 import { auth } from '../firebase'
 import { useNavigate } from 'react-router-dom'
 import Registro from './Registro'
+import RegistroLibro from './RegistroLibros'
 
 const Admin = () => {
     const navigate=useNavigate()
@@ -18,11 +19,11 @@ const Admin = () => {
   return (
     <div>
         {
-            user && (<h3>{user.email}</h3>)
+            user && (<h3>Hola, <span className='text-primary'>{user.email}</span></h3>)
         }
         {
             user && (
-            <Registro user={user}/>
+            <RegistroLibro user={user}/>
             )
         }
     </div>

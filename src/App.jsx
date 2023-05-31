@@ -1,6 +1,3 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import { BrowserRouter as Router,
 Routes,
@@ -18,7 +15,6 @@ function App() {
   const [firebaseUser,setFirebaseUser]=React.useState(false)
   React.useEffect(()=>{
     auth.onAuthStateChanged(user=>{
-      console.log(user);
       if (user) {
         setFirebaseUser(user)
       } else {

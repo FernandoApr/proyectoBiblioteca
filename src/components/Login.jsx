@@ -1,7 +1,9 @@
 import React from 'react'
 import { auth, db } from '../firebase'
 import { useNavigate } from 'react-router-dom'
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 import '../App.css'
+import { setDoc, doc } from 'firebase/firestore'
 
 const Login = () => {
     const [email, setEmail] = React.useState('')
@@ -35,7 +37,7 @@ const Login = () => {
             return
         }
         if (pass.length < 6) {
-            setError('Contraseña debe ser mayor a 6 caracteres')
+            setError('La contraseña debe ser mayor a 6 caracteres')
             return
         }
 
@@ -51,14 +53,14 @@ const Login = () => {
     //login
     const login = React.useCallback(async () => {
         try {
-            const res = await auth.signInWithEmailAndPassword(email, pass)
+            const res = await signInWithEmailAndPassword(auth, email, pass)
             console.log(res.user);
             setEmail('')
             setPass('')
             setError(null)
             navigate('/admin')
         } catch (error) {
-            console.log(error.code);
+            console.log(error);
             if (error.code === 'auth/invalid-email') {
                 setError('Email no válido')
             }
@@ -73,23 +75,23 @@ const Login = () => {
     //registrar
     const registrar = React.useCallback(async () => {
         try {
-            const res = await auth.createUserWithEmailAndPassword(email, pass)
-            console.log(res.user);
+            const res = await createUserWithEmailAndPassword(auth, email, pass)
             //guardamos user en db
-            await db.collection('usuarios').doc(res.user.email).set(
-                {
+            await
+
+                setDoc(doc(db, 'usuarios', res.user.uid), {
                     email: res.user.email,
                     id: res.user.uid,
                     nombre: nombre,
                     apellido: apellido
                 }
-            )
+                )
             setEmail('')
             setPass('')
             setError(null)
             navigate('/admin')
         } catch (error) {
-            console.log(error.code);
+            console.log(error);
             if (error.code === 'auth/invalid-email') {
                 setError('Email no válido')
             }
@@ -102,7 +104,7 @@ const Login = () => {
         <div className="container mt-5">
             <div className='row justify-content-center'>
                 <div className='col-12 col-sm-8 col-md-6 col-xl-4'>
-                    <div class="card card-login">
+                    <div className="card card-login">
 
                         <div className="card-header">
                             <h3 className='text-center'>
@@ -178,24 +180,16 @@ const Login = () => {
                                     </button>
                                     <button className='btn btn-outline-primary'
                                         onClick={() => { setModoRegistro(!modoRegistro) }}
-                                        type='button'
-                                    >
-
+                                        type='button'>
                                         {
                                             modoRegistro ? '¿Ya estas registrado?' : '¿No tienes cuenta?'
                                         }
                                     </button>
                                 </div>
                             </form>
-
                         </div>
-
-
-
                     </div>
-
                 </div>
-
             </div>
         </div>
     )
