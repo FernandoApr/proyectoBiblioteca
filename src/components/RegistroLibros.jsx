@@ -139,7 +139,7 @@ const Formulario = (props) => {
             <h1 className='text-center'>CRUD DE LIBROS</h1>
             <hr />
             <div className="row">
-                <div className="col-8">
+                <div className="col-sm-12 col-md-9">
                     <h4 className="text-center">Listado de Libros</h4>
                     <input type="text"
                         className="form-control mb-2"
@@ -147,48 +147,94 @@ const Formulario = (props) => {
                         value={busqueda}
                         onChange={(e) => setBusqueda(e.target.value)} />
                     <br /><br />
-                    <ul className="list-group">
-                        {
-                            filtro.map(item => (
-                                <li className="list-group-item" key={item.id}>
-                                    <span className="lead">{item.nombreLibro}-{item.nombreAutor}-{item.descripcion}-{item.año}-{item.disponibilidad ? "Disponible" : "No disponible"}</span>
-                                    <button className="btn btn-danger btn-sm float-end mx-2" onClick={() => eliminar(item.id)}>Eliminar</button>
-                                    <button className="btn btn-warning btn-sm float-end" onClick={() => editar(item)}>Editar</button>
-                                </li>
-                            ))
-                        }
-                    </ul>
+                    <table className='table table-striped table-hover table-sm'>
+                        <thead className='text-center'>
+                            <tr>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Autor</th>
+                                <th scope="col">A&ntilde;o</th>
+                                <th scope="col">Descripci&oacute;n</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col">Acci&oacute;n</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                filtro.map(item => (
+                                    <tr key={item.id} className='align-middle'>
+                                        <td className="small">{item.nombreLibro}</td>
+                                        <td className="small">{item.nombreAutor}</td>
+                                        <td className="small">{item.año}</td>
+                                        <td className="small">{item.descripcion}</td>
+                                        <td className='small text-nowrap'>{item.disponibilidad ? "Disponible" : "No disponible"}</td>
+                                        <td>
+                                        <div className="d-grid gap-2 d-block">
+                                            <button className="btn btn-danger btn-sm" type='button' onClick={() => eliminar(item.id)}>Eliminar</button>
+                                            <button className="btn btn-warning btn-sm" type='button' onClick={() => editar(item)}>Editar</button>
+                                        </div>
+                                        </td>
+                                    </tr>                                        
+                                ))
+                            }
+                        </tbody>
+                    </table>
+                    
                 </div>
-                <div className="col-4">
+                <div className="col-sm-12 col-md-3">
                     <h4 className="text-center">{modoEdicion ? 'EDITAR LIBROS' : 'AGREGAR LIBROS'}</h4>
-                    <form onSubmit={modoEdicion ? editarLibros : guardarLibros}>
-                        <input type="text"
-                            className="form-control mb-2"
-                            placeholder='Ingrese Nombre del Libro'
-                            value={nombreLibro}
-                            onChange={(e) => setNombreLibro(e.target.value)} />
+                    <form className="mb-3" onSubmit={modoEdicion ? editarLibros : guardarLibros}>
+                        <div className="form-floating">
+                            <input 
+                                type="text"
+                                id="bookName"
+                                className="form-control mb-2"
+                                placeholder='Ingrese Nombre del Libro'
+                                value={nombreLibro}
+                                onChange={(e) => setNombreLibro(e.target.value)} />
+                            <label htmlFor="bookName">Nombre del Libro</label>
+                       
+                        </div>
+                        <div className="form-floating">
+                            <input 
+                                type="text" className="form-control mb-2"
+                                id="bookAuthor"
+                                placeholder='Ingrese el autor del libro'
+                                value={nombreAutor}
+                                onChange={(e) => setNombreAutor(e.target.value)} />
+                            <label htmlFor="bookAutor">Autor del Libro</label>
+                        </div>
+                        
+                        <div className="form-floating">
+                            <input
+                                type="number" className="form-control mb-2"
+                                id="bookYear"
+                                placeholder='Ingrese el año del libro'
+                                value={año}
+                                onChange={(e) => setAño(e.target.value)} />
+                            <label htmlFor="bookYear">A&ntilde;o de lanzamiento</label>
+                        </div>
+                        <div className="form-floating">
+                            <input 
+                                type="text" className="form-control mb-2"
+                                id="bookDescription"
+                                placeholder='Ingrese la descripción'
+                                value={descripcion}
+                                onChange={(e) => setDescripcion(e.target.value)} />
+                            <label htmlFor="bookDescription">Descripci&oacute;n</label>
 
-                        <input type="text" className="form-control mb-2"
-                            placeholder='Ingrese el autor del libro'
-                            value={nombreAutor}
-                            onChange={(e) => setNombreAutor(e.target.value)} />
-
-                        <input type="number" className="form-control mb-2"
-                            placeholder='Ingrese el año del libro'
-                            value={año}
-                            onChange={(e) => setAño(e.target.value)} />
-
-                        <textarea type="text" className="form-control mb-2"
-                            placeholder='Ingrese la descripción'
-                            value={descripcion}
-                            onChange={(e) => setDescripcion(e.target.value)} />
-
-                        <input type="checkbox" className=" mb-2"
-                            checked={disponibilidad}
-                            id="disponibilidad"
-                            onChange={(e) => setDisponibilidad(e.target.checked)} />
-                        <label htmlFor="disponibilidad">
-                            Ingrese si el libro se encuentra actualmente disponible</label>
+                        </div>
+                        <div className="input-group mb-3">
+                            <div className="input-group col-auto">
+                                <label htmlFor="disponibilidad">
+                                    Confirme si el libro se encuentra actualmente disponible &nbsp;     
+                                </label>
+                                <input 
+                                    type="checkbox" className="form-check-input mb-2"
+                                    checked={disponibilidad}
+                                    id="disponibilidad"
+                                    onChange={(e) => setDisponibilidad(e.target.checked)} />                        
+                            </div>
+                        </div>
                         <br /><br />
                         {
                             modoEdicion ?
