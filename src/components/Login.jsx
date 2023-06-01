@@ -12,6 +12,7 @@ const Login = () => {
     const [apellido, setApellido] = React.useState('')
     const [error, setError] = React.useState(null)
     const [modoRegistro, setModoRegistro] = React.useState(true)
+    const [tipo, setTipo] = React.useState('')
 
     const navigate = useNavigate()
     //guardar datos
@@ -46,6 +47,7 @@ const Login = () => {
             registrar()
         } else {
             login()
+
         }
 
 
@@ -54,11 +56,10 @@ const Login = () => {
     const login = React.useCallback(async () => {
         try {
             const res = await signInWithEmailAndPassword(auth, email, pass)
-            console.log(res.user);
             setEmail('')
             setPass('')
             setError(null)
-            navigate('/admin')
+            navigate('/')
         } catch (error) {
             console.log(error);
             if (error.code === 'auth/invalid-email') {
@@ -83,13 +84,14 @@ const Login = () => {
                     email: res.user.email,
                     id: res.user.uid,
                     nombre: nombre,
-                    apellido: apellido
+                    apellido: apellido,
+                    tipo: 'U'
                 }
                 )
             setEmail('')
             setPass('')
             setError(null)
-            navigate('/admin')
+            navigate('/')
         } catch (error) {
             console.log(error);
             if (error.code === 'auth/invalid-email') {
