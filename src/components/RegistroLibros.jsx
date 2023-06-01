@@ -214,7 +214,7 @@ const Formulario = (props) => {
                             <label htmlFor="bookYear">A&ntilde;o de lanzamiento</label>
                         </div>
                         <div className="form-floating">
-                            <input 
+                            <textarea 
                                 type="text" className="form-control mb-2"
                                 id="bookDescription"
                                 placeholder='Ingrese la descripción'
